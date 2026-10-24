@@ -1,0 +1,36 @@
+{{- $addons := list
+  (dict "name" "monitoring" "repository" "https://prometheus-community.github.io/helm-charts" "chart" "kube-prometheus-stack" "version" .Values.charts.monitoring "namespace" "monitoring" "wave" "0")
+  (dict "name" "gitlab-runner" "repository" "https://charts.gitlab.io" "chart" "gitlab-runner" "version" .Values.charts.gitlabRunner "namespace" "ci" "wave" "1")
+}}
+{{- range $addon := $addons }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $.Values.clusterName }}-{{ $addon.name }}
+  labels:
+    lab-project: {{ $.Values.project | quote }}
+  annotations:
+    argocd.argoproj.io/sync-wave: {{ $addon.wave | quote }}
+  finalizers: [resources-finalizer.argocd.argoproj.io]
+spec:
+  project: {{ $.Values.project }}
+  sources:
+    - repoURL: {{ $addon.repository | quote }}
+      chart: {{ $addon.chart | quote }}
+      targetRevision: {{ $addon.version | quote }}
+      helm:
+        valueFiles: [{{ printf "$values/apps/addons/%s/values.yaml" $addon.name | quote }}]
+        values: |
+          commonLabels:
+            aws-region: {{ $.Values.region | quote }}
+    - repoURL: {{ $.Values.gitopsRepoUrl | quote }}
+      targetRevision: {{ $.Values.gitopsRevision | quote }}
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ $addon.namespace }}
+  syncPolicy:
+    automated: {prune: true, selfHeal: true}
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]
+{{- end }}

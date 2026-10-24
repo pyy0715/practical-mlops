@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.clusterName }}-root
+  labels:
+    lab-project: {{ .Values.project | quote }}
+  finalizers: [resources-finalizer.argocd.argoproj.io]
+spec:
+  project: default
+  source:
+    repoURL: {{ required "gitopsRepoUrl is required" .Values.gitopsRepoUrl | quote }}
+    targetRevision: {{ .Values.gitopsRevision | quote }}
+    path: apps/argocd/root
+    helm:
+      values: |
+        project: {{ .Values.project | quote }}
+        clusterName: {{ .Values.clusterName | quote }}
+        region: {{ .Values.region | quote }}
+        gitopsRepoUrl: {{ .Values.gitopsRepoUrl | quote }}
+        gitopsRevision: {{ .Values.gitopsRevision | quote }}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated: {prune: true, selfHeal: true}
+    syncOptions: [CreateNamespace=true]

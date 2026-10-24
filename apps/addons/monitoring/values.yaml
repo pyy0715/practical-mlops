@@ -1,0 +1,26 @@
+grafana:
+  persistence:
+    enabled: false
+  service:
+    type: ClusterIP
+prometheus:
+  service:
+    type: ClusterIP
+  prometheusSpec:
+    retention: 6h
+    serviceMonitorSelectorNilUsesHelmValues: false
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+      limits:
+        memory: 1Gi
+alertmanager:
+  enabled: false
+# EKS control plane endpoints are not directly scraped by these components.
+kubeEtcd:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false

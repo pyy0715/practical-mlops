@@ -1,0 +1,10 @@
+{
+  "aws_region": "ap-northeast-2",
+  "account_id": "REPLACE_WITH_ACCOUNT_ID",
+  "project": "practical-mlops-lab",
+  "kubernetes_version": "1.35",
+  "admin_principal_arn": "arn:aws:iam::REPLACE_WITH_ACCOUNT_ID:role/REPLACE_WITH_ADMIN_ROLE",
+  "api_access_cidrs": [
+    "REPLACE_WITH_PUBLIC_IP/32"
+  ]
+}

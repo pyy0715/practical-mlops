@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-joker
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: hello-joker
+  template:
+    metadata:
+      labels:
+        app: hello-joker
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: app
+          image: {{ printf "%s@%s" (required "Set image.repository" .Values.image.repository) (required "Set image.digest" .Values.image.digest) | quote }}
+          ports:
+            - name: http
+              containerPort: 8083
+          readinessProbe:
+            httpGet: {path: /healthz, port: http}
+          livenessProbe:
+            httpGet: {path: /healthz, port: http}
+          resources:
+            requests: {cpu: 100m, memory: 128Mi}
+            limits: {memory: 256Mi}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-joker
+  labels:
+    app: hello-joker
+spec:
+  type: ClusterIP
+  selector:
+    app: hello-joker
+  ports:
+    - name: http
+      port: 8083
+      targetPort: http
+{{- if .Values.metrics.enabled }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: hello-joker
+spec:
+  selector:
+    matchLabels:
+      app: hello-joker
+  endpoints:
+    - port: http
+      path: /metrics/
+{{- end }}

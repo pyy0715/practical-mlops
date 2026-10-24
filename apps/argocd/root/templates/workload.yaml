@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.clusterName }}-hello-joker
+  labels:
+    lab-project: {{ .Values.project | quote }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  finalizers: [resources-finalizer.argocd.argoproj.io]
+spec:
+  project: {{ .Values.project }}
+  source:
+    repoURL: {{ .Values.gitopsRepoUrl | quote }}
+    targetRevision: {{ .Values.gitopsRevision | quote }}
+    path: apps/workloads/hello-joker
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: mlops
+  syncPolicy:
+    automated: {prune: true, selfHeal: true}
+    syncOptions: [CreateNamespace=true]
