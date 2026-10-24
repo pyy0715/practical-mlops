@@ -8,8 +8,6 @@ GitLab은 별도 EC2에 직접 설치한다. 소스와 이미지 레지스트리
 
 [HashiCorp의 구성 가이드](https://developer.hashicorp.com/terraform/tutorials/kubernetes/kubernetes-provider)에 따라 EKS와 Argo CD 부트스트랩은 별도 state로 관리한다. 종료할 때는 Argo CD가 배포한 리소스를 먼저 정리하고, 부트스트랩과 EKS를 역순으로 삭제한다. GitLab 데이터는 이 삭제 범위에서 분리한다.
 
-AWS 인증은 Terraform 변수로 전달하지 않고 `AWS_PROFILE` 등 [AWS provider의 표준 인증 경로](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)를 사용한다. 리전·Kubernetes 버전·접근 CIDR처럼 실제로 달라지는 값만 입력으로 두고, 대상 계정 확인은 `allowed_account_ids`로 유지한다.
-
 ## Reproducible Environment
 
 Python과 uv 버전, 개발·검증 명령은 mise로 관리한다. Python 의존성은 `pyproject.toml`에 선언하고 `uv.lock`으로 고정한다. 로컬과 CI, Docker 빌드에서 같은 lockfile을 사용한다.
