@@ -1,7 +1,0 @@
-image:
-  repository: ""
-  digest: ""
-imagePullSecrets: []
-replicas: 1
-metrics:
-  enabled: false

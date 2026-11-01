@@ -16,8 +16,6 @@ spec:
       namespace: kube-system
     - server: https://kubernetes.default.svc
       namespace: ci
-    - server: https://kubernetes.default.svc
-      namespace: mlops
   clusterResourceWhitelist:
     - group: rbac.authorization.k8s.io
       kind: ClusterRole
