@@ -1,7 +1,7 @@
 [project]
-name = "practical-mlops"
+name = "hello-joker"
 version = "0.1.0"
-description = "Machine Learning Platform Engineering study environment"
+description = "Hello Joker FastAPI example"
 requires-python = ">=3.12,<3.13"
 dependencies = [
   "fastapi>=0.115,<1",

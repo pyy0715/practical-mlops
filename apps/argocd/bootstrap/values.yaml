@@ -2,4 +2,4 @@ project: practical-mlops-lab
 clusterName: practical-mlops-lab
 region: ap-northeast-2
 gitopsRepoUrl: ""
-gitopsRevision: main
+gitopsRevision: labs/hello-joker

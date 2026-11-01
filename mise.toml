@@ -5,27 +5,3 @@ terraform = "1.14.7"
 
 [env]
 UV_PYTHON_DOWNLOADS = "never"
-
-[tasks.sync]
-description = "Install the locked development dependencies"
-run = 'uv sync --locked --python "$(command -v python)"'
-
-[tasks.lock]
-description = "Resolve dependencies after an intentional pyproject change"
-run = 'uv lock --python "$(command -v python)"'
-
-[tasks.check]
-description = "Check dependency lock and Python code"
-run = [
-  'uv lock --check --python "$(command -v python)"',
-  'uv run --locked --python "$(command -v python)" ruff check src',
-  'uv run --locked --python "$(command -v python)" ruff format --check src',
-]
-
-[tasks.dev]
-description = "Run the chapter 3 application locally"
-run = 'uv run --locked --python "$(command -v python)" uvicorn --app-dir src hello_joker.main:app --host 127.0.0.1 --port 8083 --reload'
-
-[tasks."image:build"]
-description = "Build a local container image"
-run = "docker build -t practical-mlops/hello-joker:dev ."

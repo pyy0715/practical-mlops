@@ -2,7 +2,7 @@ project: practical-mlops-lab
 clusterName: practical-mlops-lab
 region: ap-northeast-2
 gitopsRepoUrl: ""
-gitopsRevision: main
+gitopsRevision: labs/hello-joker
 charts:
   monitoring: "92.11.0"
   gitlabRunner: "0.89.0"

@@ -11,8 +11,8 @@ WORKDIR /app
 
 COPY pyproject.toml uv.lock ./
 RUN uv sync --locked --no-dev --python /usr/local/bin/python
-COPY src ./src
+COPY main.py ./main.py
 
 USER 10001:10001
 EXPOSE 8083
-CMD ["uvicorn", "--app-dir", "src", "hello_joker.main:app", "--host", "0.0.0.0", "--port", "8083"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8083"]
