@@ -1,0 +1,12 @@
+image:
+  repository: ""
+  digest: ""
+imagePullSecrets: []
+existingSecret: income-lab
+storageClassName: income-gp3
+postgres:
+  image: postgres:16.15-bookworm
+  storage: 2Gi
+redis:
+  image: redis:8.8.4-alpine
+  storage: 1Gi

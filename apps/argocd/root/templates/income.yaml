@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ .Values.clusterName }}-hello-joker
+  name: {{ .Values.clusterName }}-income
   labels:
     lab-project: {{ .Values.project | quote }}
   annotations:
@@ -12,10 +12,10 @@ spec:
   source:
     repoURL: {{ .Values.gitopsRepoUrl | quote }}
     targetRevision: {{ .Values.gitopsRevision | quote }}
-    path: apps/workloads/hello-joker
+    path: apps/workloads/income
   destination:
     server: https://kubernetes.default.svc
-    namespace: mlops
+    namespace: kubeflow
   syncPolicy:
     automated: {prune: true, selfHeal: true}
     syncOptions: [CreateNamespace=true]

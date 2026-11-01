@@ -17,7 +17,7 @@ spec:
     - server: https://kubernetes.default.svc
       namespace: ci
     - server: https://kubernetes.default.svc
-      namespace: mlops
+      namespace: kubeflow
   clusterResourceWhitelist:
     - group: rbac.authorization.k8s.io
       kind: ClusterRole
@@ -31,3 +31,7 @@ spec:
       kind: ValidatingWebhookConfiguration
     - group: ""
       kind: Namespace
+    - group: scheduling.k8s.io
+      kind: PriorityClass
+    - group: storage.k8s.io
+      kind: StorageClass

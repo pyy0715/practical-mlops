@@ -1,0 +1,27 @@
+{{- range $component := list "cluster" "runtime" }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $.Values.clusterName }}-kfp-{{ $component }}
+  labels:
+    lab-project: {{ $.Values.project | quote }}
+  annotations:
+    argocd.argoproj.io/sync-wave: {{ if eq $component "cluster" }}"0"{{ else }}"1"{{ end }}
+  finalizers: [resources-finalizer.argocd.argoproj.io]
+spec:
+  project: {{ $.Values.project }}
+  source:
+    repoURL: {{ $.Values.gitopsRepoUrl | quote }}
+    targetRevision: {{ $.Values.gitopsRevision | quote }}
+    path: apps/addons/kfp/{{ $component }}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kubeflow
+  syncPolicy:
+    automated: {prune: true, selfHeal: true}
+    retry:
+      limit: 5
+      backoff: {duration: 10s, factor: 2, maxDuration: 2m}
+    syncOptions: [CreateNamespace=true, ServerSideApply=true, SkipDryRunOnMissingResource=true]
+{{- end }}

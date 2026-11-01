@@ -1,4 +1,4 @@
 {
   "gitops_repo_url": "https://gitlab.example.com/study/practical-mlops.git",
-  "gitops_revision": "main"
+  "gitops_revision": "labs/income"
 }

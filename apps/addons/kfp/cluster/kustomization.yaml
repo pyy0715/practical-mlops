@@ -1,0 +1,5 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - https://github.com/kubeflow/pipelines/manifests/kustomize/cluster-scoped-resources?ref=555bfa60a70da88c594960bdacfd78fa7c061043
+  - storage-class.yaml
