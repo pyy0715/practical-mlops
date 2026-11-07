@@ -4,7 +4,7 @@
 
 모델을 어디에서 실행하고, 데이터를 어떻게 전달하고, 다른 서비스와 어떻게 연결할 것인가는 모델을 훈련하는 것만큼 중요하다. 배포한 뒤에도 시간이 지나면서 성능이 달라질 수 있다. MLOps는 이 변화를 발견하고 다음 개선으로 연결하는 운영 방식이다.
 
-DevOps의 자동화와 CI/CD 원칙은 여기에서도 유효하다. 다만 머신러닝에서는 코드 외에 데이터와 모델도 검증하고 관리해야 한다. 코드가 그대로여도 입력 데이터가 달라지면 예측 품질이 떨어질 수 있기 때문이다. Google의 [MLOps 문서](https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning)도 데이터·모델 검증과 지속적 훈련을 주요 차이로 설명한다.
+DevOps의 자동화와 CI/CD 원칙은 여기에서도 유효하다. 다만 머신러닝에서는 코드 외에 데이터와 모델도 검증하고 관리해야 한다. 코드가 그대로여도 입력 데이터가 달라지면 예측 품질이 떨어질 수 있기 때문이다. Google의 [MLOps 문서](https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning)도 데이터 및 모델의 검증과 지속적 훈련을 주요 차이로 설명한다.
 
 **서비스가 정상 응답하는지와 모델이 여전히 유효한 예측을 하는지는 함께 확인해야 한다.**
 
@@ -40,7 +40,7 @@ Spotify의 [홈 추천 모델 운영 사례](https://engineering.atspotify.com/2
 
 데이터 드리프트는 성능 저하를 의심할 신호다. 바로 재훈련하기보다 수집 오류인지, 전처리가 달라졌는지, 실제 사용 환경이 변했는지 확인해야 한다. 재훈련으로 해결할 문제와 데이터 파이프라인을 수정해야 할 문제는 다르다.
 
-카카오페이의 [「FDS에 지속 성장하는 ML 모델 적용 이야기」](https://tech.kakaopay.com/post/ifkakao2024-fds/)(2024)는 이런 대응을 구체적으로 보여준다. 최근 데이터로 주기적으로 재훈련하고, 운영 모델과 Recall·Precision·FP 등을 비교해 개선된 모델을 배포할 수 있도록 했다. 여기에 “결제 아이템 종류별 최근 사고 비율”을 피처로 사용해, 새로운 사고 정보가 재훈련 전에도 예측에 반영될 수 있도록 구성했다.
+카카오페이의 [「FDS에 지속 성장하는 ML 모델 적용 이야기」](https://tech.kakaopay.com/post/ifkakao2024-fds/)(2024)는 이런 대응을 구체적으로 보여준다. 최근 데이터로 주기적으로 재훈련하고, 운영 모델과 Recall, Precision, FP 등을 비교해 개선된 모델을 배포할 수 있도록 했다. 여기에 “결제 아이템 종류별 최근 사고 비율”을 피처로 사용해, 새로운 사고 정보가 재훈련 전에도 예측에 반영될 수 있도록 구성했다.
 
 **운영 피드백은 재훈련뿐 아니라 피처 갱신과 모델 검증에도 연결되어야 한다.** 변화에 대응하는 경로가 갖춰져야 머신러닝 수명주기가 운영 루프로 작동한다.
 
@@ -50,9 +50,9 @@ Google은 자동화 범위에 따라 MLOps 성숙도를 세 단계로 구분한�
 
 | 수준 | 운영 방식 | 핵심 변화 |
 | --- | --- | --- |
-| Level 0 | 실험·훈련·모델 전달을 수동으로 수행 | 훈련된 모델을 배포 |
-| Level 1 | 데이터·모델 검증을 포함한 훈련 파이프라인 자동화 | 모델을 만드는 흐름을 배포 |
-| Level 2 | 파이프라인 자체의 빌드·테스트·배포 자동화 | 그 흐름의 변경도 지속적으로 전달 |
+| Level 0 | 실험, 훈련, 모델 전달을 수동으로 수행 | 훈련된 모델을 배포 |
+| Level 1 | 데이터 및 모델의 검증을 포함한 훈련 파이프라인 자동화 | 모델을 만드는 흐름을 배포 |
+| Level 2 | 파이프라인 자체의 빌드, 테스트, 배포 자동화 | 그 흐름의 변경도 지속적으로 전달 |
 
 ![Google의 MLOps Level 1 훈련 파이프라인 자동화](https://docs.cloud.google.com/static/architecture/images/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning-3-ml-automation-ct.svg)
 

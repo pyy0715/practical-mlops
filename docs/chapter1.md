@@ -20,13 +20,13 @@ Google의 [「Hidden Technical Debt in Machine Learning Systems」](https://proc
 
 이때 어떤 데이터와 코드, 설정으로 만든 모델인지 남아 있지 않으면 이전 결과를 재현하거나 변경의 효과를 비교하기 어렵다. 실험 단계부터 기록과 자동화를 고민해야 하는 이유다.
 
-**머신러닝 수명주기를 설계한다는 것은 다음 실험과 변경을 감당할 수 있는 흐름을 만드는 일이다.** 개발·스테이징·프로덕션으로 이어지는 과정에서도 같은 모델과 처리 과정을 추적할 수 있어야 한다.
+**머신러닝 수명주기를 설계한다는 것은 다음 실험과 변경을 감당할 수 있는 흐름을 만드는 일이다.** 개발, 스테이징, 프로덕션으로 이어지는 과정에서도 같은 모델과 처리 과정을 추적할 수 있어야 한다.
 
 ## Shared Platform
 
-이 반복을 여러 팀이 겪으면 조직 차원의 문제가 된다. Uber의 [2017년 Michelangelo 소개 글](https://www.uber.com/blog/michelangelo-machine-learning-platform/)에서는 프로젝트마다 서빙 컨테이너를 따로 만들고, 실험 결과를 저장하고 비교하는 표준 경로도 부족했던 상황을 설명한다. Michelangelo는 데이터 관리부터 훈련·평가·배포·예측·모니터링까지 공통 흐름을 제공했다.
+이 반복을 여러 팀이 겪으면 조직 차원의 문제가 된다. Uber의 [2017년 Michelangelo 소개 글](https://www.uber.com/blog/michelangelo-machine-learning-platform/)에서는 프로젝트마다 서빙 컨테이너를 따로 만들고, 실험 결과를 저장하고 비교하는 표준 경로도 부족했던 상황을 설명한다. Michelangelo는 데이터 관리부터 훈련, 평가, 배포, 예측, 모니터링까지 공통 흐름을 제공했다.
 
-![Michelangelo의 온라인·오프라인 데이터 준비 파이프라인](https://tb-static.uber.com/prod/udam-assets/c16cb7bc-7dd3-593b-b7fd-b59af38c73a0.jpg)
+![Michelangelo의 온라인과 오프라인 데이터 준비 파이프라인](https://tb-static.uber.com/prod/udam-assets/c16cb7bc-7dd3-593b-b7fd-b59af38c73a0.jpg)
 
 *출처: Uber Engineering, 「Meet Michelangelo: Uber’s Machine Learning Platform」(2017)*
 
@@ -46,7 +46,7 @@ Uber는 피처를 팀 간에 공유하고, 훈련과 예측에서 데이터 처�
 | --- | --- | --- |
 | 파이프라인 오케스트레이션 | Kubeflow Pipelines | 여러 단계를 연결하고 반복 실행하기 |
 | 피처 관리 | Feast | 훈련과 서빙에 필요한 피처를 일관되게 제공하기 |
-| 실험 추적·모델 관리 | MLflow | 실험 조건과 결과를 비교하고 모델 버전을 관리하기 |
+| 실험 추적과 모델 관리 | MLflow | 실험 조건과 결과를 비교하고 모델 버전을 관리하기 |
 
 특정 벤더의 플랫폼을 쓰더라도 각 역할과 연결 구조를 이해해야 한다. 그래야 제공되는 기능으로 충분한지, 어디를 보완해야 하는지 판단할 수 있다.
 
